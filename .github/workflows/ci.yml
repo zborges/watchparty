@@ -85,6 +85,9 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Update Bundler
+        run: gem install bundler --version '~> 2.4' --no-document
+
       - name: Run tests
         env:
           RAILS_ENV: test
