@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_04_002457) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_04_213201) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_04_002457) do
     t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_groups_on_creator_id"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -33,7 +34,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_04_002457) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email", null: false
-    t.string "password"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -57,6 +58,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_04_002457) do
     t.string "tmdb_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["group_id", "tmdb_id"], name: "index_watchlists_on_group_id_and_tmdb_id", unique: true
     t.index ["group_id"], name: "index_watchlists_on_group_id"
   end
 
