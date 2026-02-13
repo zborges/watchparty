@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_04_213201) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_13_163054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,23 +42,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_04_213201) do
 
   create_table "votes", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "watchlist_id", null: false
-    t.integer "score", null: false
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "watchlist_id"], name: "index_votes_on_user_id_and_watchlist_id", unique: true
-    t.index ["watchlist_id"], name: "index_votes_on_watchlist_id"
   end
 
   create_table "watchlists", force: :cascade do |t|
     t.bigint "group_id", null: false
     t.boolean "is_decision_made", default: false, null: false
-    t.jsonb "metadata", default: {}, null: false
-    t.string "tmdb_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id", "tmdb_id"], name: "index_watchlists_on_group_id_and_tmdb_id", unique: true
     t.index ["group_id"], name: "index_watchlists_on_group_id"
   end
 
@@ -66,6 +59,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_04_213201) do
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
   add_foreign_key "votes", "users"
-  add_foreign_key "votes", "watchlists"
   add_foreign_key "watchlists", "groups"
 end
