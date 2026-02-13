@@ -31,6 +31,16 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_13_163054) do
     t.index ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", unique: true
   end
 
+  create_table "movies", force: :cascade do |t|
+    t.bigint "watchlist_id", null: false
+    t.bigint "tmdb_id", null: false
+    t.jsonb "metadata", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["watchlist_id", "tmdb_id"], name: "index_movies_on_watchlist_and_tmdb", unique: true
+    t.index ["watchlist_id"], name: "index_movies_on_watchlist_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email", null: false
@@ -58,6 +68,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_13_163054) do
   add_foreign_key "groups", "users", column: "creator_id"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
+  add_foreign_key "movies", "watchlists"
   add_foreign_key "votes", "users"
   add_foreign_key "watchlists", "groups"
 end
